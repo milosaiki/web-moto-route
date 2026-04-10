@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import styles from './Navigation.module.css';
 
 type NavigationUIProps = {
@@ -12,9 +13,7 @@ export const NavigationUI: React.FC<NavigationUIProps> = ({ isMobileMenuOpen, to
     <div className={`container ${styles.inner}`}>
       <div className={styles.logoGroup}>
         <div className={styles.logoIcon}>
-          <svg className="w-6 h-6 text-white" style={{width: '24px', height: '24px', color: 'white'}} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-          </svg>
+          <Image src="/logo.png" alt="MotoRoute AI Logo Icon" width={28} height={28} style={{ objectFit: 'contain' }} />
         </div>
         <span className={`font-display ${styles.logoText}`}>
           MOTO<span className={styles.logoHighlight}>ROUTE</span> AI
