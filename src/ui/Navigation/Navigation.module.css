@@ -1,0 +1,152 @@
+.nav {
+  position: fixed;
+  width: 100%;
+  z-index: 50;
+  top: 0;
+  transition: all 0.3s;
+}
+
+.navBackground {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: -1;
+}
+
+.inner {
+  position: relative;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.logoIcon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: linear-gradient(to bottom right, #f97316, #dc2626);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s;
+}
+
+.logoGroup:hover .logoIcon {
+  transform: rotate(12deg);
+}
+
+.logoText {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.logoHighlight {
+  color: #f97316;
+}
+
+.desktopMenu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navLink {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.navLink:hover {
+  color: #fb923c;
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--neon-orange);
+  transition: width 0.3s ease;
+}
+
+.navLink:hover::after {
+  width: 100%;
+}
+
+.downloadBtn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  border: none;
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.downloadBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 15px -3px rgba(249, 115, 22, 0.5);
+}
+
+.mobileBtn {
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none;
+}
+
+.mobileMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.mobileInner {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mobileLink {
+  font-size: 1.125rem;
+  font-weight: 600;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobileDownloadBtn {
+  width: 100%;
+  padding: 0.75rem 0;
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .desktopMenu { display: none; }
+  .mobileBtn { display: block; }
+}
