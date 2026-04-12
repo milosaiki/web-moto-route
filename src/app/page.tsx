@@ -5,6 +5,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { WeatherWidget } from "@motoroute/components/WeatherWidget";
+import { useGeolocation } from "@motoroute/lib/useGeolocation";
 import { SiteFooter } from "@motoroute/components/SiteFooter";
 import { cdn } from "@motoroute/lib/cdn";
 
@@ -17,6 +18,15 @@ export default function HomePage() {
   const [routeVisible, setRouteVisible] = useState(false);
   const [routeAnimKey, setRouteAnimKey] = useState(0);
   const [calcLabel, setCalcLabel] = useState("CALCULATE ROUTE");
+  const geo = useGeolocation();
+  const [departure, setDeparture] = useState("");
+
+  // Sync departure field when geolocation resolves
+  useEffect(() => {
+    if (geo.phase === "ready" && geo.city && geo.city !== "Location Access Denied" && geo.city !== "Location Unavailable") {
+      setDeparture(geo.city);
+    }
+  }, [geo.phase, geo.city]);
 
   const scrollToId = useCallback((id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -336,7 +346,7 @@ export default function HomePage() {
                 GPS Active
               </div>
             </div>
-            <WeatherWidget />
+            <WeatherWidget geo={geo} />
           </div>
 
           {/* Map canvas */}
@@ -557,8 +567,9 @@ export default function HomePage() {
                       </div>
                       <input
                         type="text"
-                        readOnly
-                        defaultValue="San Francisco, CA"
+                        value={departure}
+                        onChange={(e) => setDeparture(e.target.value)}
+                        placeholder={geo.phase === "loading" ? "Detecting location..." : "Enter departure"}
                         className="w-full bg-transparent py-5 pr-5 pl-7 font-oswald text-white focus:outline-none destination"
                       />
                     </div>

@@ -1,17 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-type Phase = "loading" | "ready";
-
-type WeatherReady = {
-  phase: "ready";
-  temp: string;
-  location: string;
-  code: number;
-};
-
-type WeatherState = { phase: "loading" } | WeatherReady;
+import type { GeoWeather } from "@motoroute/lib/useGeolocation";
 
 function weatherIcon(code: number): { className: string; path: string } {
   if (code === 0) {
@@ -38,71 +27,17 @@ function weatherIcon(code: number): { className: string; path: string } {
   };
 }
 
-export function WeatherWidget() {
-  const [state, setState] = useState<WeatherState>({ phase: "loading" });
+interface WeatherWidgetProps {
+  geo: GeoWeather;
+}
 
-  useEffect(() => {
-    if (typeof navigator === "undefined" || !navigator.geolocation) {
-      setState({
-        phase: "ready",
-        temp: "22°C",
-        location: "Default Location",
-        code: 0,
-      });
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        try {
-          const { latitude, longitude } = position.coords;
-          const geoRes = await fetch(
-            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-          );
-          const geoData = await geoRes.json();
-          const city =
-            geoData.city || geoData.locality || "Unknown Location";
-
-          const weatherRes = await fetch(
-            `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
-          );
-          const weatherData = await weatherRes.json();
-          const temp = Math.round(weatherData.current_weather.temperature);
-          const weatherCode = weatherData.current_weather.weathercode;
-
-          setState({
-            phase: "ready",
-            temp: `${temp}°C`,
-            location: city,
-            code: weatherCode,
-          });
-        } catch {
-          setState({
-            phase: "ready",
-            temp: "22°C",
-            location: "Location Unavailable",
-            code: 0,
-          });
-        }
-      },
-      () => {
-        setState({
-          phase: "ready",
-          temp: "22°C",
-          location: "Location Access Denied",
-          code: 0,
-        });
-      },
-      { timeout: 10000, enableHighAccuracy: false }
-    );
-  }, []);
-
-  const ready = state.phase === "ready" ? state : null;
-  const icon = ready ? weatherIcon(ready.code) : null;
+export function WeatherWidget({ geo }: WeatherWidgetProps) {
+  if (!geo) return null;
+  const icon = geo.phase === "ready" ? weatherIcon(geo.weatherCode) : null;
 
   return (
     <div className="weather-widget flex items-center gap-4">
-      {state.phase === "loading" && (
+      {geo.phase === "loading" && (
         <div className="flex items-center gap-2 text-gray-400">
           <svg
             className="h-5 w-5 animate-spin"
@@ -128,7 +63,7 @@ export function WeatherWidget() {
         </div>
       )}
 
-      {ready && icon && (
+      {geo.phase === "ready" && icon && (
         <div className="flex items-center gap-3">
           <svg
             className={`h-8 w-8 ${icon.className}`}
@@ -145,9 +80,9 @@ export function WeatherWidget() {
             />
           </svg>
           <div>
-            <div className="font-racing text-2xl">{ready.temp}</div>
+            <div className="font-racing text-2xl">{geo.temp}</div>
             <div className="font-oswald text-xs text-gray-400">
-              {ready.location}
+              {geo.city}
             </div>
           </div>
         </div>
