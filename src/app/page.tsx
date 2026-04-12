@@ -612,8 +612,8 @@ export default function HomePage() {
                           type="button"
                           onClick={() => setRideMode(id)}
                           className={`rounded-lg border-2 px-2 py-3 text-center font-oswald text-sm font-bold transition-colors ${rideMode === id
-                              ? "border-orange-500 bg-orange-500/20 text-orange-400"
-                              : "border-gray-700 bg-gray-800 text-gray-400 hover:border-gray-600"
+                            ? "border-orange-500 bg-orange-500/20 text-orange-400"
+                            : "border-gray-700 bg-gray-800 text-gray-400 hover:border-gray-600"
                             }`}
                         >
                           <div className="mb-1">
