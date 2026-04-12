@@ -281,9 +281,10 @@ export default function HomePage() {
       </section>
 
       {/* ── Live Tracking — full viewport width ── */}
-      <section id="map" className="relative py-16 md:py-24 route-map" style={{ background: 'linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%)' }}>
+      <section id="map" className="relative py-16 md:py-24 route-map">
+        <div className="absolute inset-0 bg-black/80" />
         {/* Heading — centered, padded */}
-        <div className="mx-auto mb-12 px-6 text-center heading">
+        <div className="relative mx-auto mb-12 px-6 text-center heading">
           <div className="mb-4 inline-flex items-center gap-2">
             <svg className="h-5 w-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -302,7 +303,7 @@ export default function HomePage() {
         </div>
 
         {/* Map panel — centered */}
-        <div className="mx-auto  overflow-hidden rounded-2xl border-2 border-gray-800 bg-gray-900 shadow-2xl">
+        <div className="relative mx-auto  overflow-hidden rounded-2xl border-2 border-gray-800 bg-gray-900 shadow-2xl">
           {/* Toolbar */}
           <div className="flex flex-col gap-4 border-b border-gray-700 bg-gray-800 px-6 py-4 sm:flex-row sm:items-center sm:justify-between info">
             <div className="flex flex-wrap items-center gap-4">
@@ -480,8 +481,8 @@ export default function HomePage() {
       </section>
 
       {/* ── Route Planner — full viewport width ── */}
-      <section id="planner" className="tire-tread-bg relative py-3 py-xl-32">
-        <div className="absolute inset-0 bg-black/90" />
+      <section id="planner" className="relative py-3 py-xl-32">
+        <div className="absolute inset-0 bg-black/80" />
 
         <div className="relative">
           {/* Heading — centered, padded */}
