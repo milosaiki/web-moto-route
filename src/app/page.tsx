@@ -20,12 +20,12 @@ export default function HomePage() {
   const [calcLabel, setCalcLabel] = useState("CALCULATE ROUTE");
   const geo = useGeolocation();
   const [departure, setDeparture] = useState("");
+  const [destination, setDestination] = useState("");
 
-  // Sync departure field when geolocation resolves
+  // Fill departure from reverse-geocode when permission is granted (never touch destination).
   useEffect(() => {
-    if (geo.phase === "ready" && geo.city && geo.city !== "Location Access Denied" && geo.city !== "Location Unavailable") {
-      setDeparture(geo.city);
-    }
+    if (geo.phase !== "ready" || !geo.city) return;
+    setDeparture((prev) => (prev.trim() === "" ? geo.city : prev));
   }, [geo.phase, geo.city]);
 
   const scrollToId = useCallback((id: string) => {
@@ -569,7 +569,9 @@ export default function HomePage() {
                         type="text"
                         value={departure}
                         onChange={(e) => setDeparture(e.target.value)}
-                        placeholder={geo.phase === "loading" ? "Detecting location..." : "Enter departure"}
+                        placeholder={
+                          geo.phase === "loading" ? "Requesting location…" : "Enter departure"
+                        }
                         className="w-full bg-transparent py-5 pr-5 pl-7 font-oswald text-white focus:outline-none destination"
                       />
                     </div>
@@ -584,16 +586,17 @@ export default function HomePage() {
                         <svg className="h-5 w-5 text-orange-500" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
                           <path
                             fillRule="evenodd"
-                            d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z px-3"
+                            d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
                             clipRule="evenodd"
                           />
                         </svg>
                       </div>
                       <input
                         type="text"
-                        readOnly
-                        defaultValue="Lake Tahoe, NV"
-                        className="w-full bg-transparent py-5 pr-5 pl-7 font-oswald text-white focus:outline-none destination"
+                        value={destination}
+                        onChange={(e) => setDestination(e.target.value)}
+                        placeholder="Enter destination"
+                        className="w-full bg-transparent py-5 pr-5 pl-7 font-oswald text-white placeholder:text-gray-600 focus:outline-none destination"
                       />
                     </div>
                   </div>

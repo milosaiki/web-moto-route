@@ -59,7 +59,33 @@ export function WeatherWidget({ geo }: WeatherWidgetProps) {
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             />
           </svg>
-          <span className="font-oswald text-sm">Detecting location...</span>
+          <span className="font-oswald text-sm">Requesting location…</span>
+        </div>
+      )}
+
+      {(geo.phase === "denied" || geo.phase === "unavailable") && (
+        <div className="flex items-center gap-3 text-gray-400">
+          <svg
+            className="h-8 w-8 shrink-0 text-gray-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+          <div className="font-oswald text-xs leading-snug">{geo.city}</div>
         </div>
       )}
 

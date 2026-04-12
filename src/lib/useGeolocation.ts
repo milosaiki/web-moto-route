@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 
+export type GeoPhase = "loading" | "ready" | "denied" | "unavailable";
+
 export type GeoWeather = {
-  phase: "loading" | "ready";
+  phase: GeoPhase;
   latitude: number | null;
   longitude: number | null;
   city: string;
@@ -20,21 +22,32 @@ const DEFAULT: GeoWeather = {
   weatherCode: 0,
 };
 
-const FALLBACK: GeoWeather = {
-  phase: "ready",
-  latitude: null,
-  longitude: null,
-  city: "Location Unavailable",
-  temp: "22°C",
-  weatherCode: 0,
-};
+function formatPlace(geoData: {
+  locality?: string;
+  city?: string;
+  principalSubdivision?: string;
+  countryName?: string;
+}): string {
+  const line1 = geoData.locality || geoData.city || "";
+  const line2 = geoData.principalSubdivision || "";
+  const combined = [line1, line2].filter(Boolean).join(", ");
+  if (combined) return combined;
+  return geoData.countryName || "Unknown location";
+}
 
 export function useGeolocation(): GeoWeather {
   const [state, setState] = useState<GeoWeather>(DEFAULT);
 
   useEffect(() => {
     if (typeof navigator === "undefined" || !navigator.geolocation) {
-      setState({ ...FALLBACK, city: "Default Location" });
+      setState({
+        phase: "unavailable",
+        latitude: null,
+        longitude: null,
+        city: "Geolocation not supported",
+        temp: "",
+        weatherCode: 0,
+      });
       return;
     }
 
@@ -55,8 +68,7 @@ export function useGeolocation(): GeoWeather {
           const geoData = await geoRes.json();
           const weatherData = await weatherRes.json();
 
-          const city =
-            geoData.city || geoData.locality || "Unknown Location";
+          const city = formatPlace(geoData);
           const temp = Math.round(weatherData.current_weather.temperature);
           const weatherCode = weatherData.current_weather.weathercode;
 
@@ -69,13 +81,27 @@ export function useGeolocation(): GeoWeather {
             weatherCode,
           });
         } catch {
-          setState(FALLBACK);
+          setState({
+            phase: "unavailable",
+            latitude: null,
+            longitude: null,
+            city: "Could not load weather or place",
+            temp: "",
+            weatherCode: 0,
+          });
         }
       },
       () => {
-        setState({ ...FALLBACK, city: "Location Access Denied" });
+        setState({
+          phase: "denied",
+          latitude: null,
+          longitude: null,
+          city: "Location access denied",
+          temp: "",
+          weatherCode: 0,
+        });
       },
-      { timeout: 10000, enableHighAccuracy: false }
+      { timeout: 10000, enableHighAccuracy: false, maximumAge: 300_000 }
     );
   }, []);
 

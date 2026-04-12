@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "MotoRoute AI - Built For The Ride",
   description:
     "The first navigation system built exclusively for riders. No cars. No compromises. AI routing, weather, and group tracking.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
