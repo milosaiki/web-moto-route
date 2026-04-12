@@ -281,16 +281,24 @@ export default function HomePage() {
       </section>
 
       {/* ── Live Tracking — full viewport width ── */}
-      <section id="map" className="bg-gray-800 py-3 route-map">
+      <section id="map" className="relative py-16 md:py-24 route-map" style={{ background: 'linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%)' }}>
         {/* Heading — centered, padded */}
-        <div className="mx-auto mb-12  px-6 text-center heading">
-          <h2 className="font-racing mb-4 text-5xl md:text-6xl">
-            <span className="text-white">LIVE</span>{" "}
-            <span className="text-orange-500">TRACKING</span>
+        <div className="mx-auto mb-12 px-6 text-center heading">
+          <div className="mb-4 inline-flex items-center gap-2">
+            <svg className="h-5 w-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span className="font-oswald text-sm tracking-[0.5em] text-orange-500">NAVIGATION HQ</span>
+          </div>
+          <h2 className="font-racing mb-4 text-5xl md:text-7xl">
+            <span className="text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.15)]">LIVE</span>{" "}
+            <span className="text-orange-500 drop-shadow-[0_0_30px_rgba(255,107,53,0.4)]">TRACKING</span>
           </h2>
-          <p className="font-oswald text-lg text-gray-400">
+          <p className="font-oswald text-lg text-gray-300 md:text-xl">
             Real-time navigation with local weather conditions
           </p>
+          <div className="mx-auto mt-4 h-1 w-32 bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
         </div>
 
         {/* Map panel — centered */}
@@ -662,13 +670,10 @@ export default function HomePage() {
 
               {/* Map preview column */}
               <div className="relative min-h-[600px] overflow-hidden bg-gray-800 lg:col-span-2">
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(circle at 2px 2px, rgba(255,61,0,0.15) 1px, transparent 0)",
-                    backgroundSize: "40px 40px",
-                  }}
+                <img
+                  src={cdn("/route-planner-map.png")}
+                  alt="Route planner map"
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
                 <svg
                   className="absolute inset-0 h-full w-full"
@@ -740,7 +745,7 @@ export default function HomePage() {
 
       {/* ── Features ── */}
       <section id="features" className="engine-turned relative py-4 py-xl-32">
-        <div className="absolute inset-0 bg-black/80" />
+        <div className="absolute inset-0 bg-black/90" />
         <div className="relative mx-auto  px-6">
           <div className="mb-20 text-center py-4 py-xl-32">
             <h2 className="font-racing mb-4 text-5xl md:text-7xl">
