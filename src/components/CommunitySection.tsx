@@ -89,11 +89,43 @@ export function CommunitySection() {
             </button>
           </div>
 
-          <div className="relative phone-wrapper">
+          <div className="relative phone-wrapper flex justify-center">
             <div className="absolute inset-0 rounded-full bg-orange-500/20 blur-3xl" />
-            <div className="relative mx-auto w-full max-w-lg overflow-hidden rounded-[3rem] border-8 border-gray-800 bg-gray-900 shadow-2xl">
-              <div className="mx-auto h-6 w-32 rounded-b-xl bg-gray-800" />
-              <div className="min-h-[600px] bg-gray-900 p-6">
+
+            {/* Phone frame — left side buttons */}
+            <div className="absolute left-1/2 top-[18%] -translate-x-[166px] flex flex-col gap-2 z-10">
+              <div className="h-8 w-[3px] rounded-full bg-gray-600" />
+              <div className="h-12 w-[3px] rounded-full bg-gray-600" />
+              <div className="h-12 w-[3px] rounded-full bg-gray-600" />
+            </div>
+            {/* Phone frame — right side button */}
+            <div className="absolute left-1/2 top-[28%] translate-x-[163px] z-10">
+              <div className="h-16 w-[3px] rounded-full bg-gray-600" />
+            </div>
+
+            <div className="relative mx-auto w-[320px] overflow-hidden rounded-[3rem] border-[6px] border-gray-800 bg-gray-900 shadow-[0_30px_80px_rgba(0,0,0,0.7),inset_0_0_0_1px_rgba(255,255,255,0.05)]">
+              {/* Status bar */}
+              <div className="flex items-center justify-between bg-gray-900 px-6 pt-3 pb-1">
+                <span className="text-[11px] font-semibold text-white">9:41</span>
+                {/* Dynamic island */}
+                <div className="h-[22px] w-[90px] rounded-full bg-black" />
+                <div className="flex items-center gap-1">
+                  {/* Signal bars */}
+                  <svg className="h-3 w-4 text-white" viewBox="0 0 16 12" fill="currentColor" aria-hidden>
+                    <rect x="0" y="8" width="3" height="4" rx="0.5" />
+                    <rect x="4.5" y="5" width="3" height="7" rx="0.5" />
+                    <rect x="9" y="2" width="3" height="10" rx="0.5" opacity="0.4" />
+                    <rect x="13.5" y="0" width="2.5" height="12" rx="0.5" opacity="0.4" />
+                  </svg>
+                  {/* Battery */}
+                  <svg className="h-3 w-6 text-white" viewBox="0 0 24 12" fill="currentColor" aria-hidden>
+                    <rect x="0" y="1" width="20" height="10" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                    <rect x="1.5" y="2.5" width="13" height="7" rx="1" />
+                    <path d="M21.5 4v4c1-.5 1-3.5 0-4z" />
+                  </svg>
+                </div>
+              </div>
+              <div className="bg-gray-900 px-5 pb-2 pt-1">
                 <div className="mb-6 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-500">
@@ -109,7 +141,7 @@ export function CommunitySection() {
                   </div>
                 </div>
 
-                <div className="relative mb-4 h-64 overflow-hidden rounded-2xl bg-gray-800">
+                <div className="relative mb-4 h-52 overflow-hidden rounded-2xl bg-gray-800">
                   <div className="absolute inset-0 opacity-30">
                     <svg width="100%" height="100%" aria-hidden>
                       <title>Grid</title>
@@ -215,6 +247,10 @@ export function CommunitySection() {
                     SOS
                   </button>
                 </div>
+              </div>
+              {/* Home indicator */}
+              <div className="flex justify-center bg-gray-900 pb-3 pt-2">
+                <div className="h-1 w-28 rounded-full bg-white/30" />
               </div>
             </div>
           </div>
