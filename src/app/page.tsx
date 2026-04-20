@@ -7,6 +7,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { WeatherWidget } from "@motoroute/components/WeatherWidget";
 import { useGeolocation } from "@motoroute/lib/useGeolocation";
 import { SiteFooter } from "@motoroute/components/SiteFooter";
+import { CommunitySection } from "@motoroute/components/CommunitySection";
+import { SafetySection } from "@motoroute/components/SafetySection";
+import { CtaSection } from "@motoroute/components/CtaSection";
 import { cdn } from "@motoroute/lib/cdn";
 
 type RideMode = "curvy" | "fast" | "dirt";
@@ -65,14 +68,19 @@ export default function HomePage() {
         },
       });
 
-      gsap.from(".tacho-card", {
-        scrollTrigger: { trigger: "#features", start: "top 80%" },
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power2.out",
-      });
+      gsap.fromTo(
+        "#features .feature-card",
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.75,
+          stagger: 0.06,
+          ease: "power2.out",
+          clearProps: "transform,opacity",
+          scrollTrigger: { trigger: "#features", start: "top 85%", once: true },
+        },
+      );
     });
     return () => ctx.revert();
   }, []);
@@ -108,23 +116,26 @@ export default function HomePage() {
 
           {/* Desktop nav links */}
           <div className="hidden items-center gap-10 md:flex">
-            {[
-              ["#features", "FEATURES"],
-              ["#planner", "PLANNER"],
-              ["#map", "MAP"],
-            ].map(([href, label]) => (
+            {(
+              [
+                ["#features", "FEATURES"],
+                ["#planner", "PLANNER"],
+                ["#map", "MAP"],
+                ["#community", "COMMUNITY"],
+                ["#safety", "SAFETY"],
+              ] as const
+            ).map(([href, label]) => (
               <a
                 key={href}
                 href={href}
-                className="group relative py-2 font-oswald text-sm font-medium tracking-[0.15em] text-gray-300 transition-colors hover:text-white"
+                className="nav-link py-2 font-oswald text-sm font-semibold tracking-wide text-gray-300 transition-colors hover:text-orange-400"
               >
                 {label}
-                <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-orange-500 transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
             <button
               type="button"
-              className="vibrate-hover piston-btn rounded px-7 py-2.5 font-oswald text-sm font-bold tracking-[0.15em] text-white"
+              className="btn-primary rounded-full px-7 py-2.5 font-oswald text-sm font-bold tracking-[0.15em] text-white shadow-lg transition-transform hover:scale-105"
             >
               START ENGINE
             </button>
@@ -157,6 +168,8 @@ export default function HomePage() {
                   ["features", "FEATURES"],
                   ["planner", "PLANNER"],
                   ["map", "MAP"],
+                  ["community", "COMMUNITY"],
+                  ["safety", "SAFETY"],
                 ] as const
               ).map(([id, label]) => (
                 <button
@@ -170,7 +183,7 @@ export default function HomePage() {
               ))}
               <button
                 type="button"
-                className="piston-btn mt-3 rounded py-3 text-center font-bold text-white"
+                className="btn-primary mt-3 rounded-full py-3 text-center font-bold text-white"
               >
                 START ENGINE
               </button>
@@ -180,7 +193,7 @@ export default function HomePage() {
       </nav>
 
       {/* ── Hero ── */}
-      <section className="relative h-screen min-h-[36rem] overflow-hidden">
+      <section className="relative h-svh max-h-svh overflow-hidden md:h-screen md:max-h-none md:min-h-[36rem]">
         {/* Parallax background container — taller than viewport, translated by GSAP */}
         <div className="hero-parallax absolute inset-0 will-change-transform" style={{ height: '130%', top: '-15%' }}>
           {/* Background: placeholder image shown until video loads */}
@@ -206,36 +219,40 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/20" />
         <div className="speed-lines absolute inset-0 opacity-20" />
 
-        {/* Content — absolutely positioned to guarantee centering */}
-        <div className="absolute inset-0 z-10 flex items-center px-6 pt-20 sm:px-10 md:px-14 lg:px-20 xl:px-24">
-          <div className="mx-auto w-full  hero-section-content">
+        {/* Content — column on mobile so stats + cue stay inside svh; centered on md+ */}
+        <div className="absolute inset-0 z-10 flex flex-col px-6 pt-20 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] sm:px-10 md:items-center md:pb-0 md:px-14 lg:px-20 xl:px-24">
+          <div className="mx-auto flex min-h-0 w-full flex-1 flex-col justify-center hero-section-content">
             <div className="max-w-3xl">
               {/* Eyebrow */}
-              <div className="mb-8 flex items-center gap-4">
-                <div className="h-px w-12 bg-orange-500" />
-                <span className="font-oswald text-sm tracking-[0.5em] text-orange-500">
+              <div className="mb-3 flex items-center gap-3 md:mb-8 md:gap-4">
+                <div className="h-px w-8 bg-orange-500 md:w-12" />
+                <span className="font-oswald text-xs tracking-[0.35em] text-orange-500 md:text-sm md:tracking-[0.5em]">
                   REDLINE PERFORMANCE
                 </span>
               </div>
 
               {/* Headline */}
-              <h1 className="font-racing mb-6 text-7xl leading-none md:text-8xl lg:text-9xl">
+              <h1 className="font-racing mb-3 text-5xl leading-[0.95] sm:text-6xl md:mb-6 md:text-8xl md:leading-none lg:text-9xl">
                 <span className="block text-white drop-shadow-2xl">RIDE</span>
-                <span className="chrome-text block">BEYOND</span>
-                <span className="block text-orange-500 drop-shadow-lg">LIMITS</span>
+                <span className="glitch block text-white drop-shadow-2xl" data-text="BEYOND">
+                  BEYOND
+                </span>
+                <span className="block bg-gradient-to-r from-orange-400 via-red-500 to-orange-600 bg-clip-text text-transparent drop-shadow-lg">
+                  LIMITS
+                </span>
               </h1>
 
               {/* Subtext */}
-              <p className="font-oswald mb-10 max-w-xl text-lg leading-relaxed tracking-wide text-gray-300 drop-shadow-lg md:text-xl">
+              <p className="font-oswald mb-5 max-w-xl text-sm leading-snug tracking-wide text-gray-300 drop-shadow-lg sm:text-base md:mb-10 md:text-xl md:leading-relaxed">
                 THE FIRST NAVIGATION SYSTEM BUILT EXCLUSIVELY FOR RIDERS.{" "}
                 <span className="text-orange-400">NO CARS. NO COMPROMISES.</span>
               </p>
 
               {/* CTAs */}
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-4">
                 <button
                   type="button"
-                  className="vibrate-hover piston-btn flex items-center justify-center gap-3 rounded-lg px-10 py-4 font-oswald text-lg font-bold tracking-wider text-white"
+                  className="btn-primary flex items-center justify-center gap-2 rounded-full px-8 py-3 font-oswald text-base font-bold tracking-wider text-white shadow-lg transition-transform hover:scale-105 md:gap-3 md:px-10 md:py-4 md:text-lg"
                 >
                   <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
                     <path
@@ -249,7 +266,7 @@ export default function HomePage() {
                 <button
                   type="button"
                   onClick={() => scrollToId("map")}
-                  className="flex items-center justify-center gap-3 rounded-lg border-2 border-white/30 bg-white/10 px-10 py-4 font-oswald text-lg font-bold tracking-wider backdrop-blur-md transition-all hover:border-orange-500 hover:bg-white/15"
+                  className="flex items-center justify-center gap-2 rounded-full border-2 border-white/20 px-8 py-3 font-oswald text-base font-bold tracking-wider transition-all hover:border-orange-500 hover:bg-orange-500/10 md:gap-3 md:px-10 md:py-4 md:text-lg"
                 >
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                     <path
@@ -264,7 +281,7 @@ export default function HomePage() {
               </div>
 
               {/* Stats */}
-              <div className="mt-14 grid grid-cols-2 gap-6 border-t border-white/20 pt-8 sm:grid-cols-4">
+              <div className="mt-5 grid grid-cols-2 gap-x-3 gap-y-3 border-t border-white/20 pt-4 sm:grid-cols-4 sm:gap-6 md:mt-14 md:pt-8">
                 {[
                   ["500K+", "ROUTES PLANNED"],
                   ["98%", "ACCURACY"],
@@ -272,8 +289,10 @@ export default function HomePage() {
                   ["24/7", "ROADSIDE"],
                 ].map(([n, l]) => (
                   <div key={l}>
-                    <div className="font-racing text-3xl text-orange-500">{n}</div>
-                    <div className="font-oswald text-xs tracking-widest text-gray-400">{l}</div>
+                    <div className="font-racing text-xl text-orange-500 sm:text-2xl md:text-3xl">{n}</div>
+                    <div className="font-oswald text-[0.65rem] leading-tight tracking-wider text-gray-400 sm:text-xs md:tracking-widest">
+                      {l}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -282,7 +301,7 @@ export default function HomePage() {
         </div>
 
         {/* Scroll cue */}
-        <div className="scroll-cue absolute bottom-8 left-1/2 z-30 flex flex-col items-center gap-2">
+        <div className="scroll-cue absolute bottom-[max(0.75rem,env(safe-area-inset-bottom,0px))] left-1/2 z-30 flex flex-col items-center gap-1 md:bottom-8 md:gap-2">
           <span className="font-oswald text-xs tracking-widest text-white drop-shadow-md">TWIST THE THROTTLE</span>
           <div className="flex h-10 w-6 justify-center rounded-full border-2 border-orange-500 shadow-[0_0_10px_rgba(255,107,53,0.5)]">
             <div className="mt-2 h-3 w-1 animate-bounce rounded-full bg-orange-500" />
@@ -351,6 +370,7 @@ export default function HomePage() {
 
           {/* Map canvas */}
           <div className="map-mock map-grid relative h-[520px]">
+            <div className="scanner-line pointer-events-none" aria-hidden />
             <svg
               className="absolute inset-0 h-full w-full opacity-20"
               preserveAspectRatio="none"
@@ -481,7 +501,7 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
-                <button type="button" className="piston-btn rounded-lg px-6 py-3 font-oswald font-bold">
+                <button type="button" className="btn-primary rounded-lg px-6 py-3 font-oswald font-bold text-white">
                   REROUTE
                 </button>
               </div>
@@ -491,7 +511,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Route Planner — full viewport width ── */}
-      <section id="planner" className="relative py-3 py-xl-32">
+      <section id="planner" className="cyber-grid relative py-16 xl:py-32">
         <div className="absolute inset-0 bg-black/80" />
 
         <div className="relative">
@@ -656,7 +676,7 @@ export default function HomePage() {
                     type="button"
                     onClick={calculateRoute}
                     disabled={calcLoading}
-                    className="vibrate-hover piston-btn mt-4 flex w-full items-center justify-center gap-3 rounded-lg py-4 font-oswald text-lg font-bold tracking-wider text-white disabled:opacity-70"
+                    className="btn-primary mt-4 flex w-full items-center justify-center gap-3 rounded-xl py-4 font-oswald text-lg font-bold tracking-wider text-white disabled:opacity-70"
                   >
                     <svg
                       className={`h-6 w-6 ${calcLoading ? "animate-spin" : "hidden"}`}
@@ -684,7 +704,8 @@ export default function HomePage() {
               </div>
 
               {/* Map preview column */}
-              <div className="relative min-h-[600px] overflow-hidden bg-gray-800 lg:col-span-2">
+              <div className="map-container relative min-h-[600px] overflow-hidden bg-gray-800 lg:col-span-2">
+                <div className="scanner-line pointer-events-none" aria-hidden />
                 <img
                   src={cdn("/route-planner-map.png")}
                   alt="Route planner map"
@@ -747,7 +768,7 @@ export default function HomePage() {
                         </div>
                       </div>
                     </div>
-                    <button type="button" className="piston-btn rounded-lg px-8 py-3 font-oswald font-bold">
+                    <button type="button" className="btn-primary rounded-lg px-8 py-3 font-oswald font-bold text-white">
                       RIDE
                     </button>
                   </div>
@@ -758,33 +779,62 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Features ── */}
-      <section id="features" className="engine-turned relative py-4 py-xl-32">
-        <div className="absolute inset-0 bg-black/90" />
-        <div className="relative mx-auto  px-6">
-          <div className="mb-20 text-center py-4 py-xl-32">
-            <h2 className="font-racing mb-4 text-5xl md:text-7xl">
-              <span className="text-white">BUILT FOR</span>{" "}
+      {/* ── Features (index.html: feature-card hover + icon scale) ── */}
+      <section id="features" className="relative py-16 xl:py-32">
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900/50 to-black" />
+        <div className="relative mx-auto px-6">
+          <div className="mb-20 text-center">
+            <h2 className="font-display mb-4 text-4xl font-bold md:text-6xl">
+              <span className="text-white">ENGINEERED FOR</span>{" "}
               <span className="text-orange-500">RIDERS</span>
             </h2>
+            <div className="mx-auto h-1 w-24 bg-gradient-to-r from-orange-500 to-transparent" />
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            <div className="tacho-card knurled group flex flex-col gap-4 rounded-2xl p-8">
-              <div className="mx-auto flex w-fit max-w-full flex-row items-center justify-center gap-3 rounded-full bg-orange-500/20 px-4 py-2">
-                <svg className="h-8 w-8 shrink-0 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+          <div className="grid grid-cols-1 items-stretch gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="feature-card group flex h-full min-h-88 flex-col bg-gray-900/85 p-8 backdrop-blur-sm">
+              <div className="mb-6 flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-orange-500/20 transition-transform duration-300 group-hover:scale-110">
+                <svg className="h-7 w-7 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                  />
                 </svg>
-                <h3 className="font-oswald text-2xl font-bold leading-none text-white">AI ROUTING</h3>
               </div>
-              <p className="text-center text-sm text-gray-400">
-                Machine learning algorithms analyze road quality and rider preferences.
+              <h3 className="font-display mb-3 shrink-0 text-xl font-bold">AI Route Intelligence</h3>
+              <p className="flex-1 leading-relaxed text-gray-400">
+                Machine learning algorithms analyze road quality, elevation changes, and rider preferences to generate
+                the perfect path.
               </p>
+              <ul className="mt-4 shrink-0 space-y-2 text-sm text-gray-500">
+                <li className="flex items-center gap-2">
+                  <svg className="h-4 w-4 shrink-0 text-orange-500" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
+                    <path
+                      fillRule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Curvature analysis
+                </li>
+                <li className="flex items-center gap-2">
+                  <svg className="h-4 w-4 shrink-0 text-orange-500" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
+                    <path
+                      fillRule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Surface condition reports
+                </li>
+              </ul>
             </div>
 
-            <div className="tacho-card knurled group flex flex-col gap-4 rounded-2xl p-8">
-              <div className="mx-auto flex w-fit max-w-full flex-row items-center justify-center gap-3 rounded-full bg-blue-500/20 px-4 py-2">
-                <svg className="h-8 w-8 shrink-0 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+            <div className="feature-card group flex h-full min-h-88 flex-col bg-gray-900/85 p-8 backdrop-blur-sm">
+              <div className="mb-6 flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-blue-500/20 transition-transform duration-300 group-hover:scale-110">
+                <svg className="h-7 w-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -792,32 +842,136 @@ export default function HomePage() {
                     d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
                   />
                 </svg>
-                <h3 className="font-oswald text-2xl font-bold leading-none text-white">WEATHER INTEL</h3>
               </div>
-              <p className="text-center text-sm text-gray-400">
-                Real-time radar and predictive alerts for storms.
+              <h3 className="font-display mb-3 shrink-0 text-xl font-bold">Weather Intelligence</h3>
+              <p className="flex-1 leading-relaxed text-gray-400">
+                Real-time weather overlays and predictive alerts keep you safe from sudden storms and hazardous
+                conditions.
               </p>
+              <div className="mt-4 flex shrink-0 flex-wrap gap-2">
+                <span className="rounded border border-blue-500/30 bg-blue-500/20 px-2 py-1 text-xs text-blue-400">Radar</span>
+                <span className="rounded border border-purple-500/30 bg-purple-500/20 px-2 py-1 text-xs text-purple-400">
+                  Wind
+                </span>
+                <span className="rounded border border-yellow-500/30 bg-yellow-500/20 px-2 py-1 text-xs text-yellow-400">
+                  Temp
+                </span>
+              </div>
             </div>
 
-            <div className="tacho-card knurled group flex flex-col gap-4 rounded-2xl p-8">
-              <div className="mx-auto flex w-fit max-w-full flex-row items-center justify-center gap-3 rounded-full bg-green-500/20 px-4 py-2">
-                <svg className="h-8 w-8 shrink-0 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+            <div className="feature-card group flex h-full min-h-88 flex-col bg-gray-900/85 p-8 backdrop-blur-sm">
+              <div className="mb-6 flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-green-500/20 transition-transform duration-300 group-hover:scale-110">
+                <svg className="h-7 w-7 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
+                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
                   />
                 </svg>
-                <h3 className="font-oswald text-2xl font-bold leading-none text-white">RIDE CREW</h3>
               </div>
-              <p className="text-center text-sm text-gray-400">
-                Group tracking with live GPS and instant route sharing.
+              <h3 className="font-display mb-3 shrink-0 text-xl font-bold">Live Group Tracking</h3>
+              <p className="flex-1 leading-relaxed text-gray-400">
+                Ride together seamlessly. Share routes instantly and track your group&apos;s location and ETAs in
+                real-time.
               </p>
+              <div className="mt-4 flex shrink-0 -space-x-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-900 bg-orange-500 text-xs font-bold">
+                  JD
+                </div>
+                <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-900 bg-blue-500 text-xs font-bold">
+                  MK
+                </div>
+                <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-900 bg-purple-500 text-xs font-bold">
+                  +3
+                </div>
+              </div>
+            </div>
+
+            <div className="feature-card group flex h-full min-h-88 flex-col bg-gray-900/85 p-8 backdrop-blur-sm">
+              <div className="mb-6 flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-purple-500/20 transition-transform duration-300 group-hover:scale-110">
+                <svg className="h-7 w-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                  />
+                </svg>
+              </div>
+              <h3 className="font-display mb-3 shrink-0 text-xl font-bold">Offline Maps</h3>
+              <p className="flex-1 leading-relaxed text-gray-400">
+                Download detailed map tiles for remote areas. Never lose your way when you lose cell service.
+              </p>
+              <div className="mt-4 shrink-0 rounded-lg bg-gray-800 p-2">
+                <div className="mb-1 flex justify-between text-xs text-gray-500">
+                  <span>Storage Used</span>
+                  <span>2.4 GB</span>
+                </div>
+                <div className="h-2 w-full rounded-full bg-gray-700">
+                  <div className="h-2 w-[45%] rounded-full bg-purple-500" />
+                </div>
+              </div>
+            </div>
+
+            <div className="feature-card group flex h-full min-h-88 flex-col bg-gray-900/85 p-8 backdrop-blur-sm">
+              <div className="mb-6 flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-yellow-500/20 transition-transform duration-300 group-hover:scale-110">
+                <svg className="h-7 w-7 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
+                </svg>
+              </div>
+              <h3 className="font-display mb-3 shrink-0 text-xl font-bold">Universal Export</h3>
+              <p className="flex-1 leading-relaxed text-gray-400">
+                Export routes to GPX format compatible with Garmin, TomTom, and all major GPS devices.
+              </p>
+              <div className="mt-4 flex shrink-0 gap-2">
+                <span className="rounded border border-gray-700 px-2 py-1 text-xs text-gray-500">.GPX</span>
+                <span className="rounded border border-gray-700 px-2 py-1 text-xs text-gray-500">.KML</span>
+                <span className="rounded border border-gray-700 px-2 py-1 text-xs text-gray-500">.FIT</span>
+              </div>
+            </div>
+
+            <div className="feature-card group flex h-full min-h-88 flex-col bg-gray-900/85 p-8 backdrop-blur-sm">
+              <div className="mb-6 flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-red-500/20 transition-transform duration-300 group-hover:scale-110">
+                <svg className="h-7 w-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                  />
+                </svg>
+              </div>
+              <h3 className="font-display mb-3 shrink-0 text-xl font-bold">Emergency Response</h3>
+              <p className="flex-1 leading-relaxed text-gray-400">
+                One-tap emergency contact and automatic incident detection with GPS coordinates.
+              </p>
+              <button
+                type="button"
+                className="mt-4 flex w-full shrink-0 items-center justify-center gap-2 rounded-lg border border-red-500/30 py-2 text-sm text-red-400 transition-colors hover:bg-red-500/10"
+              >
+                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Emergency Setup
+              </button>
             </div>
           </div>
         </div>
       </section>
+
+      <CommunitySection />
+      <SafetySection />
+      <CtaSection />
 
       <SiteFooter />
     </>

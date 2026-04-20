@@ -6,6 +6,8 @@ const exploreLinks = [
   { href: "#features", label: "Features" },
   { href: "#planner", label: "Planner" },
   { href: "#map", label: "Map" },
+  { href: "#community", label: "Community" },
+  { href: "#safety", label: "Safety" },
 ] as const;
 
 const legalLinks = [
@@ -24,7 +26,7 @@ export function SiteFooter() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-500/40 to-transparent" aria-hidden />
 
       <div className="mx-auto  px-6 pb-10 pt-14 sm:px-8 md:px-10 lg:px-12">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10 py-6 py-xl-12">
+        <div className="grid gap-12 py-6 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10 xl:py-12">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-5">
             <a

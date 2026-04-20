@@ -36,7 +36,7 @@ export function WeatherWidget({ geo }: WeatherWidgetProps) {
   const icon = geo.phase === "ready" ? weatherIcon(geo.weatherCode) : null;
 
   return (
-    <div className="weather-widget flex items-center gap-4">
+    <div className="weather-widget weather-icon flex items-center gap-4">
       {geo.phase === "loading" && (
         <div className="flex items-center gap-2 text-gray-400">
           <svg

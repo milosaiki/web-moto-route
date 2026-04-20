@@ -24,7 +24,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="antialiased font-roboto-condensed" suppressHydrationWarning>{children}</body>
+      <body className="antialiased font-roboto-condensed" suppressHydrationWarning>
+        <div className="noise-overlay" aria-hidden />
+        {children}
+      </body>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-GN7KCTTSKM"
         strategy="afterInteractive"
