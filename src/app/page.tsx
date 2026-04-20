@@ -282,9 +282,9 @@ export default function HomePage() {
         </div>
 
         {/* Scroll cue */}
-        <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2">
-          <span className="font-oswald text-xs tracking-widest text-gray-400">TWIST THE THROTTLE</span>
-          <div className="flex h-10 w-6 justify-center rounded-full border-2 border-orange-500">
+        <div className="scroll-cue absolute bottom-8 left-1/2 z-30 flex flex-col items-center gap-2">
+          <span className="font-oswald text-xs tracking-widest text-white drop-shadow-md">TWIST THE THROTTLE</span>
+          <div className="flex h-10 w-6 justify-center rounded-full border-2 border-orange-500 shadow-[0_0_10px_rgba(255,107,53,0.5)]">
             <div className="mt-2 h-3 w-1 animate-bounce rounded-full bg-orange-500" />
           </div>
         </div>
@@ -514,7 +514,7 @@ export default function HomePage() {
               </svg>
               <span className="font-oswald text-sm tracking-widest text-orange-500">COMMAND CENTER</span>
             </div>
-            <h2 className="font-racing mb-4 text-5xl md:text-7xl">
+            <h2 className="font-racing mb-4 text-5xl md:text-7xl route-planning-heading">
               <span className="text-white">ROUTE</span>{" "}
               <span className="text-orange-500">PLANNER</span>
             </h2>
