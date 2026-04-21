@@ -137,7 +137,7 @@ export function CommunitySection() {
                   </div>
                   <div className="flex gap-1">
                     <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
-                    <span className="text-xs text-green-500">LIVE</span>
+                    <span className="text-sm text-green-500">LIVE</span>
                   </div>
                 </div>
 
@@ -199,10 +199,10 @@ export function CommunitySection() {
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-500 text-sm font-bold">M</div>
                       <div className="flex min-h-10 flex-col justify-center gap-0.5">
                         <div className="text-sm font-bold leading-tight text-white">Mike</div>
-                        <div className="text-xs leading-snug text-gray-300">2.3 mi behind</div>
+                        <div className="text-sm leading-snug text-gray-300">2.3 mi behind</div>
                       </div>
                     </div>
-                    <div className="self-center text-right text-xs text-gray-300">ETA 12:42</div>
+                    <div className="self-center text-right text-sm text-gray-300">ETA 12:42</div>
                   </div>
 
                   <div className="flex items-center justify-between rounded-xl bg-gray-800/30 p-3">
@@ -210,10 +210,10 @@ export function CommunitySection() {
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-purple-500 text-sm font-bold">J</div>
                       <div className="flex min-h-10 flex-col justify-center gap-0.5">
                         <div className="text-sm font-bold leading-tight text-white">Jessica</div>
-                        <div className="text-xs leading-snug text-gray-300">4.1 mi behind</div>
+                        <div className="text-sm leading-snug text-gray-300">4.1 mi behind</div>
                       </div>
                     </div>
-                    <div className="self-center text-right text-xs text-gray-300">ETA 12:48</div>
+                    <div className="self-center text-right text-sm text-gray-300">ETA 12:48</div>
                   </div>
                 </div>
 

@@ -47,19 +47,19 @@ export function SiteFooter() {
                 <span className="font-racing block text-2xl tracking-wide text-white transition-colors group-hover:text-gray-100 sm:text-3xl">
                   MOTO<span className="text-orange-500">ROUTE</span>
                 </span>
-                <span className="font-oswald mt-1 block text-xs font-medium tracking-[0.2em] text-gray-500">
+                <span className="font-oswald mt-1 block text-sm font-medium tracking-[0.2em] text-gray-500">
                   BUILT FOR THE RIDE
                 </span>
               </span>
             </a>
-            <p className="mt-6 max-w-md text-sm leading-relaxed text-gray-500">
+            <p className="mt-6 max-w-md text-base leading-relaxed text-gray-500">
               AI routing, weather intel, and ride crew tools—navigation tuned for motorcycles, not cars.
             </p>
           </div>
 
           {/* Explore */}
           <nav className="lg:col-span-3" aria-labelledby="footer-explore-heading">
-            <h2 id="footer-explore-heading" className="font-oswald text-xs font-bold tracking-[0.2em] text-gray-500">
+            <h2 id="footer-explore-heading" className="font-oswald text-sm font-bold tracking-[0.2em] text-gray-500">
               EXPLORE
             </h2>
             <ul className="mt-5 space-y-3">
@@ -67,7 +67,7 @@ export function SiteFooter() {
                 <li key={href}>
                   <a
                     href={href}
-                    className="font-oswald inline-flex min-h-10 items-center text-sm font-medium tracking-wide text-gray-300 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+                    className="font-oswald inline-flex min-h-10 items-center text-base font-medium tracking-wide text-gray-300 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
                   >
                     {label}
                   </a>
@@ -78,7 +78,7 @@ export function SiteFooter() {
 
           {/* Legal / meta */}
           <nav className="lg:col-span-4" aria-labelledby="footer-legal-heading">
-            <h2 id="footer-legal-heading" className="font-oswald text-xs font-bold tracking-[0.2em] text-gray-500">
+            <h2 id="footer-legal-heading" className="font-oswald text-sm font-bold tracking-[0.2em] text-gray-500">
               LEGAL
             </h2>
             <ul className="mt-5 space-y-3">
@@ -86,24 +86,24 @@ export function SiteFooter() {
                 <li key={label}>
                   <Link
                     href={href}
-                    className="font-oswald inline-flex min-h-10 items-center text-sm font-medium tracking-wide text-gray-300 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+                    className="font-oswald inline-flex min-h-10 items-center text-base font-medium tracking-wide text-gray-300 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
                   >
                     {label}
                   </Link>
                 </li>
               ))}
             </ul>
-            <p className="mt-8 text-xs leading-relaxed text-gray-600">
+            <p className="mt-8 text-sm leading-relaxed text-gray-600">
               Maps and routing are for planning only. Always obey local traffic laws and ride within your limits.
             </p>
           </nav>
         </div>
 
         <div className="mt-14 flex flex-col gap-6 border-t border-gray-800/80 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-center text-xs text-gray-600 sm:text-left">
+          <p className="text-center text-sm text-gray-600 sm:text-left">
             <span className="text-gray-500">© {year} MotoRoute AI.</span> All rights reserved.
           </p>
-          <p className="text-center text-xs text-gray-600 sm:text-right">Designed for riders. No compromises.</p>
+          <p className="text-center text-sm text-gray-600 sm:text-right">Designed for riders. No compromises.</p>
         </div>
       </div>
     </footer>

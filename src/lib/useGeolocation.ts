@@ -51,8 +51,19 @@ export function useGeolocation(): GeoWeather {
       return;
     }
 
+    let cancelled = false;
+    let watchId: number | null = null;
+
+    const clearWatch = () => {
+      if (watchId != null) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
+      }
+    };
+
     navigator.geolocation.getCurrentPosition(
       async (position) => {
+        if (cancelled) return;
         try {
           const { latitude, longitude } = position.coords;
 
@@ -72,6 +83,8 @@ export function useGeolocation(): GeoWeather {
           const temp = Math.round(weatherData.current_weather.temperature);
           const weatherCode = weatherData.current_weather.weathercode;
 
+          if (cancelled) return;
+
           setState({
             phase: "ready",
             latitude,
@@ -80,7 +93,27 @@ export function useGeolocation(): GeoWeather {
             temp: `${temp}°C`,
             weatherCode,
           });
+
+          if (cancelled) return;
+
+          watchId = navigator.geolocation.watchPosition(
+            (pos) => {
+              if (cancelled) return;
+              setState((prev) =>
+                prev.phase === "ready"
+                  ? {
+                      ...prev,
+                      latitude: pos.coords.latitude,
+                      longitude: pos.coords.longitude,
+                    }
+                  : prev
+              );
+            },
+            undefined,
+            { enableHighAccuracy: true, maximumAge: 2000, timeout: 15000 }
+          );
         } catch {
+          if (cancelled) return;
           setState({
             phase: "unavailable",
             latitude: null,
@@ -92,6 +125,7 @@ export function useGeolocation(): GeoWeather {
         }
       },
       () => {
+        if (cancelled) return;
         setState({
           phase: "denied",
           latitude: null,
@@ -103,6 +137,11 @@ export function useGeolocation(): GeoWeather {
       },
       { timeout: 10000, enableHighAccuracy: false, maximumAge: 300_000 }
     );
+
+    return () => {
+      cancelled = true;
+      clearWatch();
+    };
   }, []);
 
   return state;

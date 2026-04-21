@@ -40,14 +40,14 @@ export function CtaSection() {
             <AppleStoreIcon className="h-10 w-10 shrink-0 text-white" />
             <div className="flex flex-col items-start text-left">
               <span className="font-bold text-white">App Store</span>
-              <span className="text-sm font-medium text-orange-400">Coming soon</span>
+              <span className="text-base font-medium text-orange-400">Coming soon</span>
             </div>
           </div>
           <div className="flex min-w-[240px] items-center gap-4 rounded-full border border-orange-500/30 bg-orange-500/10 px-6 py-4 backdrop-blur-sm sm:min-w-[260px] sm:px-8">
             <GooglePlayIcon className="h-10 w-10 shrink-0 text-white" />
             <div className="flex flex-col items-start text-left">
               <span className="font-bold text-white">Google Play</span>
-              <span className="text-sm font-medium text-orange-400">Coming soon</span>
+              <span className="text-base font-medium text-orange-400">Coming soon</span>
             </div>
           </div>
         </div>

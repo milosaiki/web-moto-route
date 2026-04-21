@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+/* Slightly larger root text on phones / tablets so labels stay readable (rem-based Tailwind scales with this). */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (max-width: 1023.98px) {
+  html {
+    font-size: clamp(16px, calc(12px + 1.15vw), 18px);
+  }
+}
+
 :root {
   --neon-orange: #ff6b35;
   --neon-orange-glow: rgba(255, 107, 53, 0.4);
@@ -239,6 +251,58 @@ body::before {
   100% {
     top: 100%;
   }
+}
+
+/* Leaflet live-tracking user marker (divIcon) */
+.live-tracking-user-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.live-tracking-pulse {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.live-tracking-dot {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--neon-orange);
+  border: 2px solid #fff;
+  box-shadow:
+    0 0 12px var(--neon-orange-glow),
+    0 0 4px rgba(255, 107, 53, 0.9);
+  animation: live-tracking-pulse-ring 2s ease-out infinite;
+}
+
+@keyframes live-tracking-pulse-ring {
+  0% {
+    box-shadow:
+      0 0 0 0 rgba(255, 107, 53, 0.5),
+      0 0 12px var(--neon-orange-glow);
+  }
+
+  70% {
+    box-shadow:
+      0 0 0 12px rgba(255, 107, 53, 0),
+      0 0 12px var(--neon-orange-glow);
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(255, 107, 53, 0),
+      0 0 12px var(--neon-orange-glow);
+  }
+}
+
+.leaflet-container {
+  font-family: var(--font-body), sans-serif;
+  background: #1a1a1a;
 }
 
 .nav-link {

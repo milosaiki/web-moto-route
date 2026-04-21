@@ -6,7 +6,7 @@ export function SafetySection() {
           <h2 className="font-display mb-6 text-4xl font-bold md:text-6xl">
             SAFETY <span className="text-red-500">FIRST</span>
           </h2>
-          <p className="text-lg text-gray-400">Advanced safety features designed to protect you when it matters most.</p>
+          <p className="text-base text-gray-400 md:text-lg">Advanced safety features designed to protect you when it matters most.</p>
         </div>
 
         <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3">
@@ -22,11 +22,11 @@ export function SafetySection() {
               </svg>
             </div>
             <h3 className="font-display mb-3 text-xl font-bold">Severe Weather Alerts</h3>
-            <p className="mb-4 text-sm text-gray-400">
+            <p className="mb-4 text-base text-gray-400">
               Automatic warnings when storms, high winds, or ice intersect your route.
             </p>
             <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-left">
-              <div className="mb-1 flex items-center gap-2 text-xs font-bold text-red-400">
+              <div className="mb-1 flex items-center gap-2 text-sm font-bold text-red-400">
                 <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
                   <path
                     fillRule="evenodd"
@@ -36,7 +36,7 @@ export function SafetySection() {
                 </svg>
                 ALERT EXAMPLE
               </div>
-              <div className="text-xs text-gray-300">Heavy rain expected in 12 miles. Alternative route available.</div>
+              <div className="text-sm text-gray-300">Heavy rain expected in 12 miles. Alternative route available.</div>
             </div>
           </div>
 
@@ -52,7 +52,7 @@ export function SafetySection() {
               </svg>
             </div>
             <h3 className="font-display mb-3 text-xl font-bold">Emergency Contact</h3>
-            <p className="mb-4 text-sm text-gray-400">One-tap emergency calling with automatic GPS coordinate sharing.</p>
+            <p className="mb-4 text-base text-gray-400">One-tap emergency calling with automatic GPS coordinate sharing.</p>
             <button
               type="button"
               className="flex w-full items-center justify-center gap-2 rounded-lg border border-orange-500/50 bg-orange-500/20 py-3 text-sm font-bold text-orange-400 transition-colors hover:bg-orange-500/30"
@@ -76,10 +76,10 @@ export function SafetySection() {
               </svg>
             </div>
             <h3 className="font-display mb-3 text-xl font-bold">Crash Detection</h3>
-            <p className="mb-4 text-sm text-gray-400">
+            <p className="mb-4 text-base text-gray-400">
               AI monitors accelerometer data to detect accidents and alert emergency services.
             </p>
-            <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+            <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
               <span className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
               Monitoring Active
             </div>
