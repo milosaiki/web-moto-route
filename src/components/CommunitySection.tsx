@@ -186,11 +186,11 @@ export function CommunitySection() {
                       </div>
                       <div className="flex min-h-10 flex-col justify-center gap-0.5">
                         <div className="text-sm font-bold leading-tight text-white">You</div>
-                        <div className="text-xs leading-snug text-gray-300">Riding now • 65mph</div>
+                        <div className="text-sm leading-snug text-gray-300">Riding now • 65mph</div>
                       </div>
                     </div>
                     <div className="self-center text-right">
-                      <div className="text-xs font-bold text-orange-500">LEADER</div>
+                      <div className="text-sm font-bold text-orange-500">LEADER</div>
                     </div>
                   </div>
 
