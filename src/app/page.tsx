@@ -20,10 +20,12 @@ const LiveTrackingMap = dynamic(
   { ssr: false },
 );
 import { cdn } from "@motoroute/lib/cdn";
+import { useDesktopNav } from "@motoroute/lib/useDesktopNav";
 
 type RideMode = "curvy" | "fast" | "dirt";
 
 export default function HomePage() {
+  const desktopNav = useDesktopNav();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [rideMode, setRideMode] = useState<RideMode>("curvy");
   const [calcLoading, setCalcLoading] = useState(false);
@@ -65,6 +67,10 @@ export default function HomePage() {
       }, 3000);
     }, 2000);
   }, [calcLoading]);
+
+  useEffect(() => {
+    if (desktopNav) setMobileMenuOpen(false);
+  }, [desktopNav]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -127,54 +133,55 @@ export default function HomePage() {
             </div>
           </a>
 
-          {/* Desktop nav at xl+ only — keeps drawer on tablets/small laptops + any wide mobile layout viewport. */}
-          <div className="hidden items-center gap-10 xl:flex">
-            {(
-              [
-                ["#features", "FEATURES"],
-                ["#planner", "PLANNER"],
-                ["#map", "MAP"],
-                ["#community", "COMMUNITY"],
-                ["#safety", "SAFETY"],
-              ] as const
-            ).map(([href, label]) => (
-              <a
-                key={href}
-                href={href}
-                className="nav-link py-2 font-oswald text-base font-semibold tracking-wide text-gray-300 transition-colors hover:text-orange-400"
+          {/* Desktop bar only for wide + fine pointer; touch Chrome stays on the drawer. */}
+          {desktopNav ? (
+            <div className="flex items-center gap-10">
+              {(
+                [
+                  ["#features", "FEATURES"],
+                  ["#planner", "PLANNER"],
+                  ["#map", "MAP"],
+                  ["#community", "COMMUNITY"],
+                  ["#safety", "SAFETY"],
+                ] as const
+              ).map(([href, label]) => (
+                <a
+                  key={href}
+                  href={href}
+                  className="nav-link py-2 font-oswald text-base font-semibold tracking-wide text-gray-300 transition-colors hover:text-orange-400"
+                >
+                  {label}
+                </a>
+              ))}
+              <button
+                type="button"
+                className="btn-primary rounded-full px-7 py-2.5 font-oswald text-base font-bold tracking-[0.15em] text-white shadow-lg transition-transform hover:scale-105"
               >
-                {label}
-              </a>
-            ))}
+                START ENGINE
+              </button>
+            </div>
+          ) : (
             <button
               type="button"
-              className="btn-primary rounded-full px-7 py-2.5 font-oswald text-base font-bold tracking-[0.15em] text-white shadow-lg transition-transform hover:scale-105"
+              className="p-2 text-gray-300 hover:text-white"
+              aria-label="Open menu"
+              onClick={() => setMobileMenuOpen((o) => !o)}
             >
-              START ENGINE
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
             </button>
-          </div>
-
-          {/* Mobile hamburger */}
-          <button
-            type="button"
-            className="p-2 text-gray-300 hover:text-white xl:hidden"
-            aria-label="Open menu"
-            onClick={() => setMobileMenuOpen((o) => !o)}
-          >
-            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
+          )}
         </div>
 
         {/* Mobile menu drawer */}
-        {mobileMenuOpen && (
-          <div className="border-t border-gray-800 bg-black/95 px-6 py-4 xl:hidden">
+        {mobileMenuOpen && !desktopNav && (
+          <div className="border-t border-gray-800 bg-black/95 px-6 py-4">
             <div className="flex flex-col gap-1 font-oswald text-base tracking-widest">
               {(
                 [
