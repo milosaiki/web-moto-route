@@ -127,8 +127,8 @@ export default function HomePage() {
             </div>
           </a>
 
-          {/* Desktop nav at lg+ — below that width use the drawer (phone landscape is often 768–1023 CSS px). */}
-          <div className="hidden items-center gap-10 lg:flex">
+          {/* Desktop nav at xl+ only — keeps drawer on tablets/small laptops + any wide mobile layout viewport. */}
+          <div className="hidden items-center gap-10 xl:flex">
             {(
               [
                 ["#features", "FEATURES"],
@@ -157,7 +157,7 @@ export default function HomePage() {
           {/* Mobile hamburger */}
           <button
             type="button"
-            className="p-2 text-gray-300 hover:text-white lg:hidden"
+            className="p-2 text-gray-300 hover:text-white xl:hidden"
             aria-label="Open menu"
             onClick={() => setMobileMenuOpen((o) => !o)}
           >
@@ -174,7 +174,7 @@ export default function HomePage() {
 
         {/* Mobile menu drawer */}
         {mobileMenuOpen && (
-          <div className="border-t border-gray-800 bg-black/95 px-6 py-4 lg:hidden">
+          <div className="border-t border-gray-800 bg-black/95 px-6 py-4 xl:hidden">
             <div className="flex flex-col gap-1 font-oswald text-base tracking-widest">
               {(
                 [
